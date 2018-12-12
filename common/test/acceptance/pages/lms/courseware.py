@@ -333,6 +333,25 @@ class CoursewarePage(CoursePage, CompletionOnViewMixin):
             and self.q(css='.btn-brand').text[0] == u'Go To Prerequisite Section' \
             and self.q(css='.problem-header').text[0] == u'Content Locked'
 
+    def is_error_message_present(self):
+        """ Check if LTI error is shown """
+        return self.q(css=".error_message").is_present()
+
+    def is_iframe_present(self):
+        """ Check if LTI iframe is present"""
+        return self.q(css="iframe").is_present()
+
+    def is_launch_url_present(self):
+        """ Check if LTI launch link is present"""
+        return self.q(css=".link_lti_new_window").is_present()
+
+    @property
+    def lti_content(self):
+        """ return LTI content"""
+        iframe_name = self.q(css='.ltiLaunchFrame').attrs("name")[0]
+        self.browser.switch_to.frame(iframe_name)
+        self.wait_for_element_presence(".result","Element not present.")
+        return self.q(css=".result").text[0]
 
 class CoursewareSequentialTabPage(CoursePage):
     """

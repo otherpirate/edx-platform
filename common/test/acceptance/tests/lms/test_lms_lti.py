@@ -65,7 +65,7 @@ class TestLTIConusmer(UniqueCourseTest):
         self.assertTrue(self.courseware_page.is_iframe_present())
         self.assertFalse(self.courseware_page.is_launch_url_present())
         self.assertFalse(self.courseware_page.is_error_message_present())
-        self.assertTrue("Wrong LTI signature", self.courseware_page.check_frame("Wrong LTI signature"))
+        self.assertEqual("Wrong LTI signature", self.courseware_page.lti_content)
 
     def test_incorrect_lti_credentials_is_rendered(self):
         """
@@ -86,7 +86,7 @@ class TestLTIConusmer(UniqueCourseTest):
         self.assertTrue(self.courseware_page.is_iframe_present())
         self.assertFalse(self.courseware_page.is_launch_url_present())
         self.assertFalse(self.courseware_page.is_error_message_present())
-        self.assertEqual("Wrong LTI signature", self.courseware_page.check_frame("Wrong LTI signature"))
+        self.assertEqual("Wrong LTI signature", self.courseware_page.lti_content)
 
     def test_lti_is_rendered_iframe(self):
         """
@@ -108,7 +108,7 @@ class TestLTIConusmer(UniqueCourseTest):
         self.assertTrue(self.courseware_page.is_iframe_present())
         self.assertFalse(self.courseware_page.is_launch_url_present())
         self.assertFalse(self.courseware_page.is_error_message_present())
-        self.assertEqual("This is LTI tool. Success.", self.courseware_page.check_frame("This is LTI tool. Success."))
+        self.assertEqual("This is LTI tool. Success.", self.courseware_page.lti_content)
 
     def set_advance_settings(self, metadata):
 
