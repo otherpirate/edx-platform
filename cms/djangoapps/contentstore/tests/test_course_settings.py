@@ -23,6 +23,7 @@ from openedx.core.djangoapps.models.course_details import CourseDetails
 from student.roles import CourseInstructorRole, CourseStaffRole
 from student.tests.factories import UserFactory
 from util import milestones_helpers
+from util.views import fix_crum_request
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.fields import Date
 from xmodule.modulestore import ModuleStoreEnum
@@ -796,6 +797,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.fullcourse_setting_url = get_url(self.fullcourse.id, 'advanced_settings_handler')
         self.notes_tab = {"type": "notes", "name": "My Notes"}
 
+    @fix_crum_request
     def test_fetch_initial_fields(self):
         test_model = CourseMetadata.fetch(self.course)
         self.assertIn('display_name', test_model, 'Missing editable metadata field')
@@ -810,6 +812,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('xqa_key', test_model, 'xqa_key field ')
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': True})
+    @fix_crum_request
     def test_fetch_giturl_present(self):
         """
         If feature flag ENABLE_EXPORT_GIT is on, show the setting as a non-deprecated Advanced Setting.
@@ -818,6 +821,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': False})
+    @fix_crum_request
     def test_fetch_giturl_not_present(self):
         """
         If feature flag ENABLE_EXPORT_GIT is off, don't show the setting at all on the Advanced Settings page.
@@ -826,6 +830,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': False})
+    @fix_crum_request
     def test_validate_update_filtered_off(self):
         """
         If feature flag is off, then giturl must be filtered.
@@ -841,6 +846,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': True})
+    @fix_crum_request
     def test_validate_update_filtered_on(self):
         """
         If feature flag is on, then giturl must not be filtered.
@@ -856,6 +862,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': True})
+    @fix_crum_request
     def test_update_from_json_filtered_on(self):
         """
         If feature flag is on, then giturl must be updated.
@@ -870,6 +877,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EXPORT_GIT': False})
+    @fix_crum_request
     def test_update_from_json_filtered_off(self):
         """
         If feature flag is on, then giturl must not be updated.
@@ -884,6 +892,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('giturl', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': True})
+    @fix_crum_request
     def test_edxnotes_present(self):
         """
         If feature flag ENABLE_EDXNOTES is on, show the setting as a non-deprecated Advanced Setting.
@@ -892,6 +901,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': False})
+    @fix_crum_request
     def test_edxnotes_not_present(self):
         """
         If feature flag ENABLE_EDXNOTES is off, don't show the setting at all on the Advanced Settings page.
@@ -900,6 +910,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': False})
+    @fix_crum_request
     def test_validate_update_filtered_edxnotes_off(self):
         """
         If feature flag is off, then edxnotes must be filtered.
@@ -915,6 +926,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': True})
+    @fix_crum_request
     def test_validate_update_filtered_edxnotes_on(self):
         """
         If feature flag is on, then edxnotes must not be filtered.
@@ -930,6 +942,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': True})
+    @fix_crum_request
     def test_update_from_json_filtered_edxnotes_on(self):
         """
         If feature flag is on, then edxnotes must be updated.
@@ -944,6 +957,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_EDXNOTES': False})
+    @fix_crum_request
     def test_update_from_json_filtered_edxnotes_off(self):
         """
         If feature flag is off, then edxnotes must not be updated.
@@ -958,6 +972,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertNotIn('edxnotes', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_OTHER_COURSE_SETTINGS': True})
+    @fix_crum_request
     def test_othercoursesettings_present(self):
         """
         If feature flag ENABLE_OTHER_COURSE_SETTINGS is on, show the setting in Advanced Settings.
@@ -966,6 +981,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('other_course_settings', test_model)
 
     @patch.dict(settings.FEATURES, {'ENABLE_OTHER_COURSE_SETTINGS': False})
+    @fix_crum_request
     def test_othercoursesettings_not_present(self):
         """
         If feature flag ENABLE_OTHER_COURSE_SETTINGS is off, don't show the setting at all in Advanced Settings.
@@ -973,6 +989,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         test_model = CourseMetadata.fetch(self.fullcourse)
         self.assertNotIn('other_course_settings', test_model)
 
+    @fix_crum_request
     def test_allow_unsupported_xblocks(self):
         """
         allow_unsupported_xblocks is only shown in Advanced Settings if
@@ -982,6 +999,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         XBlockStudioConfigurationFlag(enabled=True).save()
         self.assertIn('allow_unsupported_xblocks', CourseMetadata.fetch(self.fullcourse))
 
+    @fix_crum_request
     def test_validate_from_json_correct_inputs(self):
         is_valid, errors, test_model = CourseMetadata.validate_and_update_from_json(
             self.course,
@@ -1000,6 +1018,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.assertIn('advanced_modules', test_model, 'Missing advanced_modules')
         self.assertEqual(test_model['advanced_modules']['value'], ['notes'], 'advanced_module is not updated')
 
+    @fix_crum_request
     def test_validate_from_json_wrong_inputs(self):
         # input incorrectly formatted data
         is_valid, errors, test_model = CourseMetadata.validate_and_update_from_json(
@@ -1042,6 +1061,7 @@ class CourseMetadataEditingTest(CourseTestCase):
         response = self.client.ajax_post(self.course_setting_url, json_data)
         self.assertEqual(400, response.status_code)
 
+    @fix_crum_request
     def test_update_from_json(self):
         test_model = CourseMetadata.update_from_json(
             self.course,

@@ -24,6 +24,7 @@ from models.settings.course_grading import CourseGradingModel
 from models.settings.course_metadata import CourseMetadata
 from student.tests.factories import UserFactory
 from util import milestones_helpers
+from util.views import fix_crum_request
 from xmodule.modulestore.django import modulestore
 
 
@@ -220,6 +221,7 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         resp = self.client.get('/course/bad/course/key/entrance_exam')
         self.assertEqual(resp.status_code, 400)
 
+    @fix_crum_request
     def test_contentstore_views_entrance_exam_get_bogus_exam(self):
         """
         Unit Test: test_contentstore_views_entrance_exam_get_bogus_exam
@@ -301,6 +303,7 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         resp = self.client.put(self.exam_url)
         self.assertEqual(resp.status_code, 405)
 
+    @fix_crum_request
     def test_entrance_exam_view_direct_missing_score_setting(self):
         """
         Unit Test: test_entrance_exam_view_direct_missing_score_setting
