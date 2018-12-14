@@ -93,15 +93,6 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
     """
     shard = 1
 
-    # def setUp(self):
-    #     super(CourseDetailsViewTest, self).setUp()
-
-    #     self.request = RequestFactory().request()
-    #     self.user = UserFactory()
-    #     self.request.user = self.user
-    #     set_current_request(self.request)
-    #     self.addCleanup(set_current_request, None)
-
     def alter_field(self, url, details, field, val):
         """
         Change the one field to the given value and then invoke the update post to see if it worked.
