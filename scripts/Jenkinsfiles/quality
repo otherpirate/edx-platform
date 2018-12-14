@@ -209,7 +209,7 @@ pipeline {
                         string(name: 'DESCRIPTION', value: build_description), string(name: 'CONTEXT', value: 'jenkins/quality-pipeline-master'),
                         string(name: 'CREATE_DEPLOYMENT', value: create_deployment), string(name: 'BUILD_STATUS', value: build_status)],
                         propagate: false, wait: false
-                    if (["ABORTED", "FAILURE", "UNSTABLE", "FIXED"].contains(currentBuild.currentResult)){
+                    if (currentBuild.currentResult != "SUCCESS"){
                         slackSend "${currentBuild.currentResult}: `${JOB_NAME}` #${BUILD_NUMBER}:\n${BUILD_URL}"
                     }
                 }
