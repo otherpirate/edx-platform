@@ -109,7 +109,7 @@ django-require==1.0.11
 django-rest-swagger==2.2.0
 django-sekizai==0.10.0
 django-ses==0.8.4
-django-simple-history==2.5.1
+django-simple-history==2.6.0
 django-splash==0.2.2
 django-statici18n==1.4.0
 django-storages==1.4.1
@@ -259,7 +259,7 @@ pytest-cov==2.5.1
 pytest-django==3.1.2
 pytest-forked==0.2        # via pytest-xdist
 pytest-randomly==1.2.3
-pytest-xdist==1.24.1
+pytest-xdist==1.25.0
 pytest==3.6.3
 python-dateutil==2.4.0
 python-levenshtein==0.12.0
@@ -310,7 +310,7 @@ text-unidecode==1.2       # via faker
 tincan==0.0.5
 toml==0.10.0              # via tox
 tox-battery==0.5.1
-tox==3.5.3
+tox==3.6.0
 traceback2==1.4.0         # via testtools, unittest2
 transifex-client==0.13.5
 twisted==16.6.0           # via pa11ycrawler, scrapy
