@@ -241,9 +241,12 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         resp = self.client.get(self.exam_url)
         self.assertEqual(resp.status_code, 200)
         self.course = modulestore().get_course(self.course.id)
-
         # Should raise an ItemNotFoundError and return a 404
         updated_metadata = {'entrance_exam_id': 'i4x://org.4/course_4/chapter/ed7c4c6a4d68409998e2c8554c4629d1'}
+
+        # We need a request for CourseMetadata.update_from_dict, and the value from setUp is overridden
+        # by request made above.
+        set_current_request(self.request)
         CourseMetadata.update_from_dict(
             updated_metadata,
             self.course,
@@ -255,6 +258,11 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
 
         # Should raise an InvalidKeyError and return a 404
         updated_metadata = {'entrance_exam_id': '123afsdfsad90f87'}
+
+
+        # We need a request for CourseMetadata.update_from_dict, and the value from setUp is overridden
+        # by request made above.
+        set_current_request(self.request)
         CourseMetadata.update_from_dict(
             updated_metadata,
             self.course,

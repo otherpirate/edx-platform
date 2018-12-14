@@ -93,15 +93,14 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
     """
     shard = 1
 
-    def setUp(self):
-        super(CourseDetailsViewTest, self).setUp()
+    # def setUp(self):
+    #     super(CourseDetailsViewTest, self).setUp()
 
-        self.request = RequestFactory().request()
-        self.user = UserFactory()
-        self.request.user = self.user
-        set_current_request(self.request)
-        self.addCleanup(set_current_request, None)
-
+    #     self.request = RequestFactory().request()
+    #     self.user = UserFactory()
+    #     self.request.user = self.user
+    #     set_current_request(self.request)
+    #     self.addCleanup(set_current_request, None)
 
     def alter_field(self, url, details, field, val):
         """
@@ -807,6 +806,12 @@ class CourseMetadataEditingTest(CourseTestCase):
         self.course_setting_url = get_url(self.course.id, 'advanced_settings_handler')
         self.fullcourse_setting_url = get_url(self.fullcourse.id, 'advanced_settings_handler')
         self.notes_tab = {"type": "notes", "name": "My Notes"}
+
+        self.request = RequestFactory().request()
+        self.user = UserFactory()
+        self.request.user = self.user
+        set_current_request(self.request)
+        self.addCleanup(set_current_request, None)
 
     def test_fetch_initial_fields(self):
         test_model = CourseMetadata.fetch(self.course)
