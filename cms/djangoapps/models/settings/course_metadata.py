@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from six import text_type
 from xblock.fields import Scope
-from crum import get_current_request
+from crum import get_current_user
 
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.modulestore.django import modulestore
@@ -135,7 +135,8 @@ class CourseMetadata(object):
 
         # Do not show "Create Zendesk Tickets For Suspicious Proctored Exam Attempts" in
         # Studio Advanced Settings if the user is not edX staff.
-        if not GlobalStaff().has_user(get_current_request().user):
+        import pudb; pu.db
+        if not GlobalStaff().has_user(get_current_user()):
             black_list.append('create_zendesk_tickets')
 
         return black_list

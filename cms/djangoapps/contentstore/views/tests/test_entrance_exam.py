@@ -2,6 +2,7 @@
 Test module for Entrance Exams AJAX callback handler workflows
 """
 import json
+from crum import set_current_request, get_current_request
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -24,7 +25,6 @@ from models.settings.course_grading import CourseGradingModel
 from models.settings.course_metadata import CourseMetadata
 from student.tests.factories import UserFactory
 from util import milestones_helpers
-from util.views import fix_crum_request
 from xmodule.modulestore.django import modulestore
 
 
@@ -43,6 +43,12 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         self.course_url = '/course/{}'.format(unicode(self.course.id))
         self.exam_url = '/course/{}/entrance_exam/'.format(unicode(self.course.id))
         self.milestone_relationship_types = milestones_helpers.get_milestone_relationship_types()
+
+        self.request = RequestFactory().request()
+        self.user = UserFactory()
+        self.request.user = self.user
+        set_current_request(self.request)
+        self.addCleanup(set_current_request, None)
 
     def test_entrance_exam_milestone_addition(self):
         """
@@ -221,7 +227,6 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         resp = self.client.get('/course/bad/course/key/entrance_exam')
         self.assertEqual(resp.status_code, 400)
 
-    @fix_crum_request
     def test_contentstore_views_entrance_exam_get_bogus_exam(self):
         """
         Unit Test: test_contentstore_views_entrance_exam_get_bogus_exam
@@ -231,6 +236,7 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
             {'entrance_exam_minimum_score_pct': '50'},
             http_accept='application/json'
         )
+
         self.assertEqual(resp.status_code, 201)
         resp = self.client.get(self.exam_url)
         self.assertEqual(resp.status_code, 200)
@@ -303,7 +309,6 @@ class EntranceExamHandlerTests(CourseTestCase, MilestonesTestCaseMixin):
         resp = self.client.put(self.exam_url)
         self.assertEqual(resp.status_code, 405)
 
-    @fix_crum_request
     def test_entrance_exam_view_direct_missing_score_setting(self):
         """
         Unit Test: test_entrance_exam_view_direct_missing_score_setting
