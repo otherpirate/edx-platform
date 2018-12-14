@@ -135,7 +135,6 @@ class CourseMetadata(object):
 
         # Do not show "Create Zendesk Tickets For Suspicious Proctored Exam Attempts" in
         # Studio Advanced Settings if the user is not edX staff.
-        import pudb; pu.db
         if not GlobalStaff().has_user(get_current_user()):
             black_list.append('create_zendesk_tickets')
 

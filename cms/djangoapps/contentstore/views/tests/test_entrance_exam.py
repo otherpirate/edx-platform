@@ -2,7 +2,7 @@
 Test module for Entrance Exams AJAX callback handler workflows
 """
 import json
-from crum import set_current_request, get_current_request
+from crum import set_current_request
 
 from django.conf import settings
 from django.contrib.auth.models import User
