@@ -371,6 +371,7 @@ CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',  # this is required for admin
     'django.template.context_processors.csrf',
     'help_tokens.context_processor',
+    'openedx.core.djangoapps.site_configuration.context_processors.configuration_context',
 )
 
 # Django templating
@@ -426,9 +427,8 @@ DEFAULT_TEMPLATE_ENGINE = TEMPLATES[0]
 ##############################################################################
 
 EDX_ROOT_URL = ''
-
-LOGIN_REDIRECT_URL = EDX_ROOT_URL + '/signin'
-LOGIN_URL = EDX_ROOT_URL + '/signin'
+LOGIN_REDIRECT_URL = EDX_ROOT_URL + '/home/'
+LOGIN_URL = EDX_ROOT_URL + '/'
 
 # use the ratelimit backend to prevent brute force attacks
 AUTHENTICATION_BACKENDS = [
@@ -437,7 +437,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LMS_BASE = None
-LMS_ROOT_URL = "http://localhost:8000"
+LMS_ROOT_URL = "http://localhost:18000"
 LMS_INTERNAL_ROOT_URL = LMS_ROOT_URL
 LMS_ENROLLMENT_API_PATH = "/api/enrollment/v1/"
 ENTERPRISE_API_URL = LMS_INTERNAL_ROOT_URL + '/enterprise/api/v1/'
@@ -630,7 +630,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 
 # Site info
-SITE_NAME = "localhost:8001"
+SITE_NAME = "localhost:18010"
 HTTPS = 'on'
 ROOT_URLCONF = 'cms.urls'
 

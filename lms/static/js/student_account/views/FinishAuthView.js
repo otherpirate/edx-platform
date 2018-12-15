@@ -65,10 +65,7 @@
                 this.nextUrl = this.urls.defaultNextUrl;
                 this.purchaseWorkflow = queryParams.purchaseWorkflow;
                 if (queryParams.next) {
-                    // Ensure that the next URL is internal for security reasons
-                    if (! window.isExternal(queryParams.next)) {
-                        this.nextUrl = queryParams.next;
-                    }
+                    this.nextUrl = queryParams.next;
                 }
             },
 

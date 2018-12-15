@@ -918,7 +918,7 @@ SESSION_SAVE_EVERY_REQUEST = False
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # CMS base
-CMS_BASE = 'localhost:8001'
+CMS_BASE = 'localhost:18010'
 
 # Site info
 SITE_NAME = "example.com"
@@ -2519,7 +2519,7 @@ if FEATURES.get('ENABLE_CORS_HEADERS'):
 # to simulate cross-domain requests.
 XDOMAIN_PROXY_CACHE_TIMEOUT = 60 * 15
 
-LOGIN_REDIRECT_WHITELIST = []
+LOGIN_REDIRECT_WHITELIST = [CMS_BASE]
 
 ###################### Registration ##################################
 
