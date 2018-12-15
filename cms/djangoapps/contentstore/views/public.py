@@ -14,7 +14,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from waffle.decorators import waffle_switch
 from contentstore.config import waffle
 
-__all__ = ['signup', 'login_page', 'howitworks', 'accessibility']
+__all__ = ['signup', 'login_page', 'login_redirect_to_lms', 'howitworks', 'accessibility']
 
 
 @ensure_csrf_cookie
@@ -64,6 +64,23 @@ def login_page(request):
             'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
         }
     )
+
+
+def _absolute_url(request, path):
+    import urlparse
+    site_name = configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME)
+    parts = ("https" if request.is_secure() else "http", site_name, path, '', '', '')
+    return urlparse.urlunparse(parts)
+
+
+def login_redirect_to_lms(request):
+    from django.utils.http import urlquote_plus
+    next_url = request.GET.get('next')
+    login_url = '{base_url}/login{params}'.format(
+        base_url=settings.LMS_ROOT_URL,
+        params='?next=' + urlquote_plus(_absolute_url(request, next_url)) if next_url else '',
+    )
+    return redirect(login_url)
 
 
 def howitworks(request):

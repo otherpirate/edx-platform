@@ -428,7 +428,9 @@ DEFAULT_TEMPLATE_ENGINE = TEMPLATES[0]
 
 EDX_ROOT_URL = ''
 LOGIN_REDIRECT_URL = EDX_ROOT_URL + '/home/'
-LOGIN_URL = EDX_ROOT_URL + '/'
+
+from django.core.urlresolvers import reverse_lazy
+LOGIN_URL = reverse_lazy('login_redirect_to_lms')
 
 # use the ratelimit backend to prevent brute force attacks
 AUTHENTICATION_BACKENDS = [
