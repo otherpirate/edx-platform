@@ -194,7 +194,7 @@
                 // Simulate providing a ?next query string parameter
                     setFakeQueryParams({'?next': FORWARD_URL});
 
-                    ajaxSpyAndInitialize(this);
+                    ajaxSpyAndInitialize(this); 
 
                 // Verify that we were redirected
                     expect(view.redirect).toHaveBeenCalledWith(FORWARD_URL);
