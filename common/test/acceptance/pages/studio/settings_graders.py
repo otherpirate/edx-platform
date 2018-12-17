@@ -35,6 +35,8 @@ class GradingPage(SettingsPage):
         """
         Click New Assignment Type button.
         """
+        import pdb
+        pdb.set_trace()
         self.q(css='.new-button.new-course-grading-item.add-grading-data').click()
 
     @property
@@ -192,17 +194,23 @@ class GradingPage(SettingsPage):
         """
         Set the grace period on deadline.
         """
+        import pdb
+        pdb.set_trace()
         self.wait_for(
             lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == '00:00',
             "Initial value of grace period is 00:00"
         )
         # return self.q(css='#course-grading-graceperiod').attrs('value')[0]
-        self.q(css='#course-grading-graceperiod').fill(grace_time_value)
+        # self.q(css='#course-grading-graceperiod').fill(grace_time_value)
         selector = '#course-grading-graceperiod'
         script = "$(arguments[0]).val(arguments[1]).change();"
         self.browser.execute_script(script, selector, grace_time_value)
+        self.wait_for(
+            lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == grace_time_value,
+            "Value of grace period is correct"
+        )
         self.wait_for_element_visibility('.action-save', 'Save button is present')
-        assert self.q(css='#course-grading-graceperiod').attrs('value')[0] == '01:99' or '48:00'
+        # assert self.q(css='#course-grading-graceperiod').attrs('value')[0] == '01:99' or '48:00'
         self.save()
 
     @property
