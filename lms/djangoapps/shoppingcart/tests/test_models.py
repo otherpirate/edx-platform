@@ -277,6 +277,7 @@ class OrderTest(ModuleStoreTestCase):
                 'orderId': 1,
                 'currency': 'usd',
                 'total': '40.00',
+                'revenue': '40.00',
                 'products': [
                     {
                         'sku': u'CertificateItem.honor',
