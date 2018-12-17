@@ -233,7 +233,12 @@ BADGING_BACKEND = 'lms.djangoapps.badges.backends.tests.dummy_backend.DummyBacke
 # Configure the LMS to use our stub eCommerce implementation
 ECOMMERCE_API_URL = 'http://localhost:8043/api/v2/'
 
-LMS_ROOT_URL = "http://localhost:18000"
+CMS_PORT = os.environ.get('BOK_CHOY_CMS_PORT', 8031)
+LMS_PORT = os.environ.get('BOK_CHOY_LMS_PORT', 8003)
+LMS_ROOT_URL = "http://localhost:{}".format(LMS_PORT)
+CMS_BASE = "localhost:{}".format(CMS_PORT)
+LOGIN_REDIRECT_WHITELIST = [CMS_BASE]
+
 if RELEASE_LINE == "master":
     # On master, acceptance tests use edX books, not the default Open edX books.
     HELP_TOKENS_BOOKS = {
