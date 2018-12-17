@@ -5,7 +5,7 @@ Course Grading Settings page.
 from common.test.acceptance.pages.studio.settings import SettingsPage
 from common.test.acceptance.pages.studio.utils import press_the_notification_button
 from common.test.acceptance.pages.common.utils import click_css
-from selenium.webdriver import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
 from bok_choy.promise import BrokenPromise
 from selenium.webdriver.common.keys import Keys
 
@@ -194,8 +194,8 @@ class GradingPage(SettingsPage):
         """
         Set the grace period on deadline.
         """
-        import pdb
-        pdb.set_trace()
+        # import pdb
+        # pdb.set_trace()
         self.wait_for(
             lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == '00:00',
             "Initial value of grace period is 00:00"
@@ -209,6 +209,7 @@ class GradingPage(SettingsPage):
             lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == grace_time_value,
             "Value of grace period is correct"
         )
+        # self.browser.execute_script("arguments[0].scrollIntoView();", '.action-save')
         self.wait_for_element_visibility('.action-save', 'Save button is present')
         # assert self.q(css='#course-grading-graceperiod').attrs('value')[0] == '01:99' or '48:00'
         self.save()
