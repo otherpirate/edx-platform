@@ -69,22 +69,16 @@ def login_page(request):
     )
 
 
-def _absolute_url(request, path):
-    """ Helper method for retrieving the absolute URL for this site and request. """
-    site_name = configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME)
-    parts = ("https" if request.is_secure() else "http", site_name, path, '', '', '')
-    return urlparse.urlunparse(parts)
-
-
 def login_redirect_to_lms(request):
     """
     This view redirects to the LMS login view. It is useful as a choice for Django's LOGIN_URL
     setting that is resolved when an unauthenticated user goes directly to a page requiring authentication.
     """
     next_url = request.GET.get('next')
+    absolute_next_url = request.build_absolute_uri(next_url)
     login_url = '{base_url}/login{params}'.format(
         base_url=settings.LMS_ROOT_URL,
-        params='?next=' + urlquote_plus(_absolute_url(request, next_url)) if next_url else '',
+        params='?next=' + urlquote_plus(absolute_next_url) if next_url else '',
     )
     return redirect(login_url)
 

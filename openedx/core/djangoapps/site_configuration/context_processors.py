@@ -15,12 +15,6 @@ def configuration_context(request):  # pylint: disable=unused-argument
     """
     return {
         'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
-        'current_url': urlquote_plus(_absolute_url(request, request.path)),
-        'current_site_url': urlquote_plus(_absolute_url(request, '/')),
+        'current_url': urlquote_plus(request.build_absolute_uri(request.path)),
+        'current_site_url': urlquote_plus(request.build_absolute_uri('/')),
     }
-
-
-def _absolute_url(request, path):
-    site_name = configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME)
-    parts = ("https" if request.is_secure() else "http", site_name, path, '', '', '')
-    return urlparse.urlunparse(parts)

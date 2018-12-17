@@ -35,7 +35,7 @@ class SignupPage(PageObject, HelpMixin):
         self.q(css="#register-password").fill(password)
         self.q(css="#register-country").results[0].send_keys(country)
         self.q(css="#register-favorite_movie").fill(favorite_movie)
-        
+
         # Submit it
         self.q(css=".register-button").click()
         self.wait_for_element_absence('.register-button', 'Register button is gone.')

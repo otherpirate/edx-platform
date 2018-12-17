@@ -330,7 +330,7 @@ def _get_redirect_to(request):
         if not is_safe_login_or_logout_redirect(request, redirect_to):
             log.warning(
                 u'Unsafe redirect parameter detected after login page: %(redirect_to)r',
-                { "redirect_to": redirect_to}
+                {"redirect_to": redirect_to}
             )
             redirect_to = None
         elif 'text/html' not in header_accept:
