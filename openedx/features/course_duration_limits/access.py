@@ -34,7 +34,7 @@ class AuditExpiredError(AccessError):
     def __init__(self, user, course, expiration_date):
         error_code = "audit_expired"
         developer_message = "User {} had access to {} until {}".format(user, course, expiration_date)
-        expiration_date = strftime_localized(expiration_date, DEFAULT_SHORT_DATE_FORMAT)
+        expiration_date = strftime_localized(expiration_date, '%x')
         user_message = _("Access expired on {expiration_date}").format(expiration_date=expiration_date)
         try:
             course_name = CourseOverview.get_from_id(course.id).display_name_with_default
@@ -162,10 +162,10 @@ def register_course_expired_message(request, course):
                 sighted_only_span_open=HTML('<span aria-hidden="true">'),
                 span_close=HTML('</span>'),
                 a_close=HTML('</a>'),
-                expiration_date=strftime_localized(expiration_date, '%b. %-d, %Y'),
+                expiration_date=strftime_localized(expiration_date, '%x'),
                 strong_open=HTML('<strong>'),
                 strong_close=HTML('</strong>'),
                 line_break=HTML('<br>'),
-                upgrade_deadline=strftime_localized(upgrade_deadline, '%b. %-d, %Y')
+                upgrade_deadline=strftime_localized(upgrade_deadline, '%x')
             )
         )
