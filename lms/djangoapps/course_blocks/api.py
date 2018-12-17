@@ -46,6 +46,7 @@ def get_course_block_access_transformers(user):
         ContentTypeGateTransformer(),
         user_partitions.UserPartitionTransformer(),
         visibility.VisibilityTransformer(),
+        hide_empty.HideEmptyTransformer(),
     ]
 
     if has_individual_student_override_provider():
