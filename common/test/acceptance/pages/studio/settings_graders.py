@@ -206,10 +206,14 @@ class GradingPage(SettingsPage):
         script = "$(arguments[0]).val(arguments[1]).change();"
         self.browser.execute_script(script, selector, grace_time_value)
         self.wait_for(
-            lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == grace_time_value,
+            lambda:
+            self.q(
+                css='#course-grading-graceperiod'
+            ).attrs('value')[0] == grace_time_value,
             "Value of grace period is correct"
         )
-        # self.browser.execute_script("arguments[0].scrollIntoView();", '.action-save')
+        # script_for_scroll = "$('.action-save')[0].scrollIntoView();"
+        # self.browser.execute_script(script_for_scroll, '.action-save')
         self.wait_for_element_visibility('.action-save', 'Save button is present')
         # assert self.q(css='#course-grading-graceperiod').attrs('value')[0] == '01:99' or '48:00'
         self.save()
