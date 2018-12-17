@@ -196,6 +196,7 @@ class GradingPage(SettingsPage):
         """
         # import pdb
         # pdb.set_trace()
+
         self.wait_for(
             lambda: self.q(css='#course-grading-graceperiod').attrs('value')[0] == '00:00',
             "Initial value of grace period is 00:00"
@@ -205,15 +206,16 @@ class GradingPage(SettingsPage):
         selector = '#course-grading-graceperiod'
         script = "$(arguments[0]).val(arguments[1]).change();"
         self.browser.execute_script(script, selector, grace_time_value)
-        self.wait_for(
-            lambda:
-            self.q(
-                css='#course-grading-graceperiod'
-            ).attrs('value')[0] == grace_time_value,
-            "Value of grace period is correct"
-        )
-        script_for_scroll = "$('.action-save')[0].scrollIntoView();"
-        self.browser.execute_script(script_for_scroll)
+        # self.wait_for(
+        #     lambda:
+        #     self.q(
+        #         css='#course-grading-graceperiod'
+        #     ).attrs('value')[0] == grace_time_value,
+        #     "Value of grace period is correct"
+        # )
+        # script_for_scroll = "$('.action-save')[0].scrollIntoView();"
+        # self.browser.execute_script(script_for_scroll)
+        self.wait_for_ajax()
         self.wait_for_element_visibility('.action-save', 'Save button is present')
         # assert self.q(css='#course-grading-graceperiod').attrs('value')[0] == '01:99' or '48:00'
         self.save()
