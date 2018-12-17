@@ -49,7 +49,7 @@ class LTI20ModuleMixin(object):
         }
         For PUTs, the content type must be "application/vnd.ims.lis.v2.result+json".
         We use the "suffix" parameter to parse out the user from the end of the URL.  An example endpoint url is
-        http://localhost:8000/courses/org/num/run/xblock/i4x:;_;_org;_num;_lti;_GUID/handler_noauth/lti_2_0_result_rest_handler/user/<anon_id>
+        http://localhost:18000/courses/org/num/run/xblock/i4x:;_;_org;_num;_lti;_GUID/handler_noauth/lti_2_0_result_rest_handler/user/<anon_id>
         so suffix is of the form "user/<anon_id>"
         Failures result in 401, 404, or 500s without any body.  Successes result in 200.  Again see
         http://www.imsglobal.org/lti/ltiv2p0/uml/purl.imsglobal.org/vocab/lis/v2/outcomes/Result/service.html

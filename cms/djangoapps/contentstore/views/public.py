@@ -1,9 +1,12 @@
 """
 Public views
 """
+import urlparse
+
 from django.conf import settings
 from django.template.context_processors import csrf
 from django.urls import reverse
+from django.utils.http import urlquote_plus
 from django.shortcuts import redirect
 from django.views.decorators.clickjacking import xframe_options_deny
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -67,14 +70,17 @@ def login_page(request):
 
 
 def _absolute_url(request, path):
-    import urlparse
+    """ Helper method for retrieving the absolute URL for this site and request. """
     site_name = configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME)
     parts = ("https" if request.is_secure() else "http", site_name, path, '', '', '')
     return urlparse.urlunparse(parts)
 
 
 def login_redirect_to_lms(request):
-    from django.utils.http import urlquote_plus
+    """
+    This view redirects to the LMS login view. It is useful as a choice for Django's LOGIN_URL
+    setting that is resolved when an unauthenticated user goes directly to a page requiring authentication.
+    """
     next_url = request.GET.get('next')
     login_url = '{base_url}/login{params}'.format(
         base_url=settings.LMS_ROOT_URL,

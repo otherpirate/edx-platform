@@ -146,6 +146,7 @@ from lms.envs.common import (
     _make_locale_paths,
 )
 from path import Path as path
+from django.core.urlresolvers import reverse_lazy
 
 from lms.djangoapps.lms_xblock.mixin import LmsBlockMixin
 from cms.lib.xblock.authoring_mixin import AuthoringMixin
@@ -428,8 +429,6 @@ DEFAULT_TEMPLATE_ENGINE = TEMPLATES[0]
 
 EDX_ROOT_URL = ''
 LOGIN_REDIRECT_URL = EDX_ROOT_URL + '/home/'
-
-from django.core.urlresolvers import reverse_lazy
 LOGIN_URL = reverse_lazy('login_redirect_to_lms')
 
 # use the ratelimit backend to prevent brute force attacks

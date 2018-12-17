@@ -16,7 +16,7 @@ def show_reference_template(request, template):
     debug mode to allow the UX team to produce and work with static
     reference templates.
 
-    e.g. http://localhost:8000/template/ux/reference/index.html
+    e.g. http://localhost:18000/template/ux/reference/index.html
     shows the template from ux/reference/index.html
 
     Note: dynamic parameters can also be passed to the page.

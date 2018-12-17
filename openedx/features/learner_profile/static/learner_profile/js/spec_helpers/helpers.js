@@ -219,7 +219,7 @@ define(['underscore', 'URI', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers'
                 course_id: null,
                 description: "Yay! It's a test badge.",
                 criteria: 'https://example.com/syllabus',
-                image_url: 'http://localhost:8000/media/badge_classes/test_lMB9bRw.png'
+                image_url: 'http://localhost:18000/media/badge_classes/test_lMB9bRw.png'
             },
             image_url: 'http://example.com/image.png',
             assertion_url: 'http://example.com/example.json',
