@@ -14,6 +14,7 @@ from .transformers import (
     user_partitions,
     visibility,
     load_override_data,
+    hide_empty,
 )
 from .usage_info import CourseUsageInfo
 
